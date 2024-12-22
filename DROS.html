@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الجدول المدرسي</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            background-color: #f2f4f7;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #fff;
+            margin-top: 30px;
+            font-size: 48px;
+            font-weight: 700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to right, #4CAF50, #6bbf92);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-collapse: collapse;
+            background-color: #ffffff;
+            transition: transform 0.3s ease;
+        }
+
+        table:hover {
+            transform: scale(1.02);
+        }
+
+        caption {
+            font-size: 26px;
+            font-weight: bold;
+            padding: 15px 0;
+            background: linear-gradient(to right, #4CAF50, #6bbf92);
+            color: white;
+            text-align: center;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        th, td {
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        th:hover {
+            background-color: #388e3c;
+        }
+
+        td {
+            background-color: #f9f9f9;
+            color: #333;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f1f8e9;
+        }
+
+        tr:hover td {
+            background-color: #e3f2e1;
+        }
+
+        .time-slot {
+            font-weight: bold;
+        }
+
+        #teachersList {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            z-index: 100;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        #teachersList h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        #teachersList ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #teachersList ul li {
+            padding: 12px;
+            font-size: 18px;
+            background-color: #f1f1f1;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #teachersList ul li:hover {
+            background-color: #e1f7d5;
+        }
+
+        #menuButton {
+            font-size: 20px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 50%;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #menuButton:hover {
+            background-color: #388e3c;
+            transform: scale(1.1);
+        }
+
+        @media screen and (max-width: 768px) {
+            table {
+                width: 100%;
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            #menuButton {
+                font-size: 18px;
+                padding: 10px 18px;
+            }
+        }
+
+        .time-slot i {
+            margin-left: 10px;
+            font-size: 20px;
+        }
+
+        .math i { color: #FF5722; }
+        .english i { color: #2196F3; }
+        .arabic i { color: #8BC34A; }
+        .islamic i { color: #FFC107; }
+        .history i { color: #9C27B0; }
+        .physics i { color: #03A9F4; }
+        .geography i { color: #009688; }
+    </style>
+</head>
+<body>
+
+    <h1>جدول الحصص الأسبوعي</h1>
+
+    <button id="menuButton" onclick="toggleTeachersList()">☰ عرض أسماء المعلمين</button>
+
+    <div id="teachersList">
+        <h2>أسماء المعلمين</h2>
+        <ul>
+            <li>أ.حميد  -  فيزياء</li>
+            <li>أ.عبدالمحسن  -  احياء</li>
+            <li>أ.محمد شاكر  -  كيمياء</li>
+            <li>أ.عمران  -  اللغة الانكليزية</li>
+            <li>أ.ثائر  -  رياضيات</li>
+            <li>أ.هشام  -  اللغة العربية</li>
+            <li>أ.ياسر  -  اسلامية</li>
+        </ul>
+    </div>
+
+    <table>
+        <caption>الجدول المدرسي</caption>
+        <thead>
+            <tr>
+                <th>اليوم</th>
+                <th>الدرس الاول</th>
+                <th>الدرس الثاني</th>
+                <th>الدرس الثالث</th>
+                <th>الدرس الرابع</th>
+                <th>الدرس الخامس</th>
+                <th>الدرس السادس</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>الأحد</td>
+                <td><span class="time-slot english">اللغة الإنجليزية <i class="fas fa-language"></i></span></td>
+                <td><span class="time-slot arabic">اللغة العربية <i class="fas fa-book"></i></span></td>
+                <td><span class="time-slot islamic">التربية الإسلامية <i class="fas fa-church"></i></span></td>
+                <td><span class="time-slot physics">الفيزياء <i class="fas fa-flask"></i></span></td>
+                <td><span class="time-slot math">الرياضيات <i class="fas fa-calculator"></i></span></td>
+                <td><span class="time-slot geography">الجغرافيا <i class="fas fa-globe"></i></span></td>
+            </tr>
+            <tr>
+                <td>الإثنين</td>
+                <td><span class="time-slot biology">أحياء <i class="fas fa-dna"></i></span></td>
+                <td><span class="time-slot physics">الفيزياء <i class="fas fa-flask"></i></span></td>
+                <td><span class="time-slot arabic">اللغة العربية <i class="fas fa-book"></i></span></td>
+                <td><span class="time-slot chemistry">الكيمياء <i class="fas fa-vial"></i></span></td>
+                <td><span class="time-slot math">الرياضيات <i class="fas fa-calculator"></i></span></td>
+                <td><span class="time-slot math">الرياضيات <i class="fas fa-calculator"></i></span></td>
+            </tr>
+            <tr>
+                <td>الثلاثاء</td>
+                <td><span class="time-slot biology">أحياء <i class="fas fa-dna"></i></span></td>
+                <td><span class="time-slot arabic">اللغة العربية <i class="fas fa-book"></i></span></td>
+                <td><span class="time-slot math">الرياضيات <i class="fas fa-calculator"></i></span></td>
+                <td><span class="time-slot math">الرياضيات <i class="fas fa-calculator"></i></span></td>
+                <td><span class="time-slot english">اللغة الإنجليزية <i class="fas fa-language"></i></span></td>
+                <td><span class="time-slot chemistry">الكيمياء <i class="fas fa-vial"></i></span></td>
+            </tr>
+            <tr>
+                <td>الأربعاء</td>
+                <td><span class="time-slot physics">الفيزياء <i class="fas fa-flask"></i></span></td>
+                <td><span class="time-slot english">اللغة الإنجليزية <i class="fas fa-language"></i></span></td>
+                <td><span class="time-slot physics">الفيزياء <i class="fas fa-flask"></i></span></td>
+                <td><span class="time-slot islamic">التربية الإسلامية <i class="fas fa-church"></i></span></td>
+                <td><span class="time-slot biology">أحياء <i class="fas fa-dna"></i></span></td>
+                <td><span class="time-slot chemistry">الكيمياء <i class="fas fa-vial"></i></span></td>
+            </tr>
+            <tr>
+                <td>الخميس</td>
+                <td><span class="time-slot biology">أحياء <i class="fas fa-dna"></i></span></td>
+                <td><span class="time-slot english">اللغة الإنجليزية <i class="fas fa-language"></i></span></td>
+                <td><span class="time-slot arabic">اللغة العربية <i class="fas fa-book"></i></span></td>
+                <td><span class="time-slot physics">الفيزياء <i class="fas fa-flask"></i></span></td>
+                <td><span class="time-slot chemistry">الكيمياء <i class="fas fa-vial"></i></span></td>
+                <td><span class="time-slot biology">أحياء <i class="fas fa-dna"></i></span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function toggleTeachersList() {
+            var teachersList = document.getElementById('teachersList');
+            if (teachersList.style.display === 'none' || teachersList.style.display === '') {
+                teachersList.style.display = 'block';
+                teachersList.style.opacity = '1';
+            } else {
+                teachersList.style.opacity = '0';
+                setTimeout(function () {
+                    teachersList.style.display = 'none';
+                }, 500); // تأخير لإخفاء العنصر بعد الانتهاء من التأثير
+            }
+        }
+    </script>
+
+</body>
+</html>
